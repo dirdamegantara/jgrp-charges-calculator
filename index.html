@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Penal Code Calculator</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.2/papaparse.min.js"></script>
+    <style>
+        body { font-family: sans-serif; background-color: #f4f4f4; display: flex; justify-content: center; align-items: flex-start; min-height: 100vh; margin: 0; padding: 20px; }
+        .container { width: 40%; background-color: white; padding: 25px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); min-width: 450px; }
+        h1, h2 { text-align: center; }
+        select, button { width: 100%; padding: 10px; margin-bottom: 15px; border-radius: 4px; border: 1px solid #ccc; box-sizing: border-box; }
+        button { background-color: #007bff; color: white; font-weight: bold; cursor: pointer; }
+        button:hover { background-color: #0056b3; }
+        button:disabled { background-color: #cccccc; cursor: not-allowed; }
+        #charge-list-display ul { list-style-type: none; padding: 0; }
+        #charge-list-display li { background-color: #e9ecef; padding: 10px; margin-bottom: 5px; border-radius: 4px; display: flex; justify-content: space-between; align-items: center; }
+        #total-calculation { margin-top: 20px; padding-top: 20px; border-top: 2px solid #ccc; }
+        .loading-text { text-align: center; color: #6c757d; }
+        .remove-btn {
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            padding: 8px 0;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 32px;
+            flex-shrink: 0;
+            margin-left: 10px;
+            font-size: 14px;
+            font-weight: bold;
+            line-height: 1;
+        }
+        .remove-btn:hover { background-color: #c82333; }
+        #copyable-section {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 2px solid #ccc;
+        }
+        details > summary {
+            cursor: pointer;
+            font-weight: bold;
+            padding: 10px;
+            background-color: #f0f0f0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            margin-bottom: 10px;
+            list-style: none;
+        }
+        details > summary::-webkit-details-marker {
+            display: none;
+        }
+        details > summary:before {
+            content: '► ';
+        }
+        details[open] > summary:before {
+            content: '▼ ';
+        }
+        details[open] > summary {
+            border-bottom-left-radius: 0;
+            border-bottom-right-radius: 0;
+        }
+        #raw-text-output {
+            width: 100%;
+            height: 200px;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 14px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-top: none;
+            border-radius: 0 0 4px 4px;
+            background-color: #e9ecef;
+            white-space: pre;
+            overflow-wrap: normal;
+            overflow-x: auto;
+            box-sizing: border-box;
+            resize: vertical;
+            margin-bottom: 15px;
+        }
+        #copy-button {
+            color: #aaaaaa;
+            background-color: #fafafa;
+        }
+        #copy-button:hover {
+            color: #010101;
+            background-color: #f0f0f0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>SAPD JGRP</h1>
+        <h2>PENAL CODE CALCULATOR</h2>
+        <div>
+            <label for="charge-select">Choose Charge:</label>
+            <select id="charge-select" disabled>
+                <option value="">Loading charge data...</option>
+            </select>
+            <button onclick="addCharge()" id="add-button" disabled>Add to the List</button>
+        </div>
+        <div id="charge-list-container">
+            <h2>CHARGES LIST</h2>
+            <div id="charge-list-display">
+                <ul></ul>
+                <p class="loading-text" id="empty-list-text">Charges list is empty.</p>
+            </div>
+            <div id="total-calculation">
+                <h3>Total Punishment</h3>
+                <p><strong>Total Fine:</strong> $<span id="total-fine">0</span></p>
+                <p><strong>Total Jailtime:</strong> <span id="total-minutes">0</span> mins</p>
+                <p><strong>Total Bail:</strong> $<span id="total-bail">0</span></p>
+            </div>
+            <div id="copyable-section">
+                 <details>
+                    <summary>Raw Text</summary>
+                    <div>
+                        <textarea id="raw-text-output" readonly placeholder="Add charges to generate the report..."></textarea>
+                        <button onclick="copyRawText()" id="copy-button">Copy Text</button>
+                    </div>
+                </details>
+            </div>
+        </div>
+    </div>
+    <script>
+        let chargeData = [];
+        let selectedCharges = [];
+
+        document.addEventListener('DOMContentLoaded', function() {
+            loadChargeData();
+            updateDisplay();
+        });
+
+        function loadChargeData() {
+            const selectElement = document.getElementById('charge-select');
+            const addButton = document.getElementById('add-button');
+
+            Papa.parse('penal_code_list.csv', {
+                download: true,
+                header: true,
+                dynamicTyping: true,
+                skipEmptyLines: true,
+                complete: function(results) {
+                    chargeData = results.data;
+                    
+                    chargeData.sort((a, b) => {
+                        if (a.PASAL !== b.PASAL) return a.PASAL - b.PASAL;
+                        return String(a.AYAT).localeCompare(String(b.AYAT));
+                    });
+
+                    selectElement.innerHTML = '<option value="">-- Choose --</option>';
+                    chargeData.forEach(item => {
+                        if (item.DENDA > 0 || item.MENIT > 0) {
+                            const option = document.createElement('option');
+                            option.value = item.id;
+                            option.textContent = `${item.PASAL}${item.AYAT} - ${item.NAMA_PELANGGARAN}`;
+                            selectElement.appendChild(option);
+                        }
+                    });
+
+                    selectElement.disabled = false;
+                    addButton.disabled = false;
+                },
+                error: function(error) {
+                    console.error("Failed to load or parse CSV:", error);
+                    selectElement.innerHTML = '<option value="">Failed to load data</option>';
+                }
+            });
+        }
+
+        function addCharge() {
+            const selectElement = document.getElementById('charge-select');
+            const selectedId = selectElement.value;
+
+            if (!selectedId) {
+                alert('Please select a charge first!');
+                return;
+            }
+            const charge = chargeData.find(p => p.id == selectedId);
+            if (charge) {
+                selectedCharges.push(charge);
+                updateDisplay();
+            }
+        }
+
+        function removeCharge(index) {
+            selectedCharges.splice(index, 1);
+            updateDisplay();
+        }
+
+        function updateDisplay() {
+            const listContainer = document.querySelector('#charge-list-display ul');
+            const emptyText = document.getElementById('empty-list-text');
+            const rawTextArea = document.getElementById('raw-text-output');
+            listContainer.innerHTML = '';
+
+            selectedCharges.sort((a, b) => {
+                if (a.PASAL !== b.PASAL) {
+                    return a.PASAL - b.PASAL;
+                }
+                return String(a.AYAT).localeCompare(String(b.AYAT));
+            });
+
+            let totalFine = 0;
+            let totalMinutes = 0;
+            let totalBail = 0;
+            let rawTextOutput = '';
+
+            if (selectedCharges.length === 0) {
+                emptyText.style.display = 'block';
+            } else {
+                emptyText.style.display = 'none';
+                let chargesTextArray = [];
+
+                selectedCharges.forEach((item, index) => {
+                    const listItem = document.createElement('li');
+                    listItem.innerHTML = `
+                        <span>
+                            <strong>${item.PASAL}${item.AYAT} - ${item.NAMA_PELANGGARAN}</strong><br>
+                            <small>Fine: $${(item.DENDA || 0).toLocaleString()} | Jail: ${item.MENIT || 0} mins | Bail: $${(item.BAIL || 0).toLocaleString()}</small>
+                        </span>
+                        <button class="remove-btn" onclick="removeCharge(${index})">X</button>
+                    `;
+                    listContainer.appendChild(listItem);
+
+                    totalFine += Number(item.DENDA || 0);
+                    totalMinutes += Number(item.MENIT || 0);
+                    totalBail += Number(item.BAIL || 0);
+
+                    let chargeString = `${item.PASAL}${item.AYAT} - ${item.NAMA_PELANGGARAN}\n`;
+                    chargeString += `$${item.DENDA || 0}\n`;
+                    chargeString += `${item.MENIT || 0} Minutes\n`;
+                    chargeString += `Bail $${item.BAIL || 0}`;
+                    chargesTextArray.push(chargeString);
+                });
+
+                rawTextOutput = chargesTextArray.join('\n\n');
+                rawTextOutput += `\n\nTotal\n`;
+                rawTextOutput += `$${totalFine}\n`;
+                rawTextOutput += `${totalMinutes} Minutes\n`;
+                rawTextOutput += `Bail $${totalBail}`;
+            }
+
+            document.getElementById('total-fine').textContent = totalFine.toLocaleString();
+            document.getElementById('total-minutes').textContent = totalMinutes;
+            document.getElementById('total-bail').textContent = totalBail.toLocaleString();
+            rawTextArea.value = rawTextOutput;
+        }
+
+        function copyRawText() {
+            const textArea = document.getElementById('raw-text-output');
+            const copyButton = document.getElementById('copy-button');
+
+            if (textArea.value === '') {
+                alert('There is no text to copy.');
+                return;
+            }
+
+            navigator.clipboard.writeText(textArea.value).then(function() {
+                const originalText = copyButton.textContent;
+                copyButton.textContent = 'Copied!';
+                setTimeout(() => {
+                    copyButton.textContent = originalText;
+                }, 2000);
+            }, function(err) {
+                console.error('Failed to copy text: ', err);
+                alert('Failed to copy text. Please try to copy manually.');
+            });
+        }
+    </script>
+</body>
+</html>

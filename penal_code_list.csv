@@ -1,0 +1,122 @@
+id,PASAL,AYAT,NAMA_PELANGGARAN,DENDA,MENIT,BAIL
+1,1,A,General Traffic Violations,250,0,0
+2,1,B,Failure to pay any issued ticket,65,15,195
+3,1,C,Driving any motorized vehicle without an official driving license,100,15,300
+4,1,D,Maneuver any sea vehicles without official sailing licenses,150,20,600
+5,1,E,Driving any truck without official trucking licenses (Heavy Truck),1500,30,9000
+6,1,E,Driving any truck without official trucking licenses (Lorry),500,30,3000
+7,1,F,"Truck driving in any federal roads, in any inappropriate path, and without any permission from officers before (Heavy Truck)",2000,30,10000
+8,1,F,"Truck driving in any federal roads, in any inappropriate path, and without any permission from officers before (Lorry)",200,30,1200
+9,1,G,Flying any air vehicles without official flying licenses as a pilot,2250,35,10000
+10,1,H,Speeding,1000,0,0
+11,1,I,Vehicle Parking Violation,150,0,0
+12,1,J,Illegal Modifications On Vehicles,200,0,0
+13,1,K,Unregistered Vehicles,150,0,0
+14,1,L,Vehicular Endangerment,2500,30,8000
+15,1,M,Vehicular Manslaughter,250,40,2000
+16,1,N,DWI or DUI,100,15,300
+17,1,O,Illegal Street Racing,150,25,750
+18,1,P,Evading From Police,150,20,600
+19,1,Q,Flight Regulations,250,0,0
+20,1,R,Misbehavely Maneuvering / Operating an Aircraft / Aircraft Endangerment,30,450,2700
+21,1,S,Emergency Landing,400,0,0
+22,1,T,Failure to Yield to Emergency Vehicles,250,0,0
+23,1,U,Failure to Yield to A Roadblock,200,0,0
+24,1,V,Following An Emergency Vehicle,300,0,0
+25,1,W,Altering or Changing a Vehicle Identification Number,100,20,400
+26,2,A,Firearms License,0,0,0
+27,2,B,Flying License,0,0,0
+28,2,C,Trucking License,0,0,0
+29,2,D,Lumberjack License,2000,25,10000
+30,2,E,Event Permit,0,0,0
+31,2,F,Organizing a Small Illegal Event,5000,25,10000
+32,2,G,Organizing a Big Illegal Event,7500,35,10000
+33,2,H,Hunting Permit,2000,30,6000
+34,3,A,Possessing of Marijuana / Pots (Small Amount),200,10,400
+35,3,B,Possessing of Marijuana / Pots (Large Amount),400,15,1200
+36,3,C,Possessing of Cocaine / Crack (Small Amount),375,20,1500
+37,3,D,Possessing of Cocaine / Crack (Large Amount),750,25,3750
+38,3,E,IUI or IWI,150,15,450
+39,3,F,Selling or distributing of illegal drugs,500,25,2500
+40,3,G,Drug Manufacturing,500,35,3500
+41,3,H,Being Present for Illegal Drug Use,100,10,200
+42,4,A,"Possessing, Showing, And Display Any Usages of Sharp / Blunt Weapons",150,15,450
+43,4,B,Possessing of Illegal Firearms,500,40,4000
+44,4,C,Possessing of Legal Firearms Without Official Firearms License,50,20,200
+45,4,D,Possessing Any Kind of Weapon Materials or Schematics,500,25,2500
+46,4,E,Firearms License Violation,0,0,0
+47,4,E2,GCU (Gun Control Unit) Weapon Target,0,0,0
+48,4,F,Brandishing a Firearm or Weapon,200,20,800
+49,4,G,Unlawful Discharge of a Firearm or Weapon,200,25,1000
+50,4,H,Possession of a Body Armor,400,10,800
+51,4,I,Weapon Trafficking,400,30,2400
+52,4,J,Possessing Destructive Devices or Explosives,350,35,2450
+53,5,A,Intimidation,50,10,100
+54,5,B,Assault,100,15,300
+55,5,C,Assault with Deadly Weapons,150,20,600
+56,5,D,Battery,200,25,1000
+57,5,E,Aggravated Battery,250,30,1500
+58,5,F,Attempted Murdering,200,30,1200
+59,5,G,Murdering,400,50,4000
+60,5,H,Committed a group criminal assault with or without weapons,250,30,1500
+61,5,I,Performing A Drive-By Using Light or Heavy Fire Arms,300,35,2100
+62,5,J,Melee Robbery,100,15,300
+63,5,K,Armed Robbery,150,30,900
+64,5,L,Piracy,150,20,600
+65,5,M,Grand Theft,250,25,1250
+66,5,N,Grand Theft Auto,250,15,750
+67,5,O,Grand Theft of Firearms,100,15,300
+68,5,P,Abuse or Desecration of Dead Human Body,200,15,600
+69,5,Q,Kidnapping,350,30,0
+70,5,R,Hostage Taking,250,60,3000
+71,5,S,Torture,150,20,600
+72,5,T,Blackmail,100,10,200
+73,5,U,Human Trafficking,550,65,7150
+74,6,A,Sexual Harassment,500,10,1000
+75,6,B,Rape,300,60,3600
+76,6,C,Statutory Rape,500,75,7500
+77,6,D,Prostitution,250,30,1500
+78,6,E,Solicitation of Sexual Engagement,250,30,1500
+79,6,F,Being Naked In Public,50,5,0
+80,6,G,Performs Any Sexual Action in Public,150,15,450
+81,7,A,Initiating A Riot,200,15,600
+82,7,B,Failing to Disperse After Lawfully Ordered by The Officials,250,20,1000
+83,7,C,Participating in a Riot,75,10,150
+84,7,D,Spitting in Public Space,150,0,0
+85,7,E,Pee in Public,150,0,0
+86,7,F,Drunk in Public Space,200,0,0
+87,7,G,Vilification,100,15,300
+88,7,H,Hate Speech,150,20,600
+89,7,I,Vigilantism,300,30,1800
+90,7,J,Disturbing Public Peace,100,15,300
+91,7,K,Brawl in Public Space,150,20,600
+92,7,L,Accessories Disturbance,150,0,0
+93,7,M,Jaywalk,50,0,0
+94,7,N,Littering the Public Facility / Space,250,0,0
+95,7,O,Unlawful Assembly,100,20,400
+96,7,P,Stalking,200,20,800
+97,7,Q,Public Intoxication,250,10,500
+98,7,R,Animal Abuse,500,20,2000
+99,7,S,Animal Cruelty,300,0,0
+100,8,A,Obstruction of Justice,30,15,90
+101,8,B,"Abusing Government Hotline (Ex : 911, 555, Etc)",100,10,200
+102,8,C,Governments Attribute,100,60,1200
+103,8,D,Impersonating Government Staff,100,60,1200
+104,8,E,Attempting to Bribe or Corrupt Any Public Officials,200,15,600
+105,8,F,"Attempting to bribe, corrupt or prevent any crime’s witnesses to step out and give out information to law enforcers",60,10,120
+106,8,G,Making a False Report,200,20,800
+107,8,H,Giving False Information to the Police Officials,125,20,0
+108,8,I,Perjury,500,20,2000
+109,8,J,Assaulting on LEO,150,40,1200
+110,8,K,Attempted Murdering A Public Officials,500,60,6000
+111,8,L,Murdering A Public Officials,600,70,8400
+112,8,M,Harbouring Criminals,250,30,1500
+113,8,N,Fraud / Scam,250,20,1000
+114,8,O,Forgery,500,30,3000
+115,8,P,Corruption,5000,300,10000
+116,9,A,Trespassing,300,5,0
+117,9,B,Trespassing Government Property,100,20,400
+118,9,C,Vandalism,250,15,450
+119,9,D,Arson,250,30,1500
+120,9,E,Extortion,150,20,600
+121,9,F,Using Property As Illegal Distribution,300,60,3600
